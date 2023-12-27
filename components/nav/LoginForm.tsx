@@ -25,7 +25,7 @@ export default function LoginForm() {
   return (
     <Button variant="outline" onClick={handleLogin}>
       <SiGithub className="mr-2" />
-      Login Github
+      Login
     </Button>
   );
 }
