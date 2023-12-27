@@ -11,7 +11,7 @@ export default function Dashboard() {
         <h1 className="text-2xl font-bold">Blogs</h1>
         <Link href="/dashboard/blog/create">
           <Button variant="outline">
-            Create Blog
+            Create
             <Plus size={16} className="ml-2" />
           </Button>
         </Link>
