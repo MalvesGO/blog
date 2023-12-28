@@ -4,6 +4,7 @@ import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/atom-one-dark.css";
 import { PiTerminalThin } from "react-icons/pi";
+import CopyButton from "./CopyButton";
 
 export default function MarkdownPreview({
   content,
@@ -31,9 +32,10 @@ export default function MarkdownPreview({
 
           if (match?.length) {
             let Icon = PiTerminalThin;
+            const id = (Math.floor(Math.random() * 100) +1).toString();
             return (
               <div className="bg-gradient-dark text-gray-300 rounded-md">
-                <div className="px-5 py-2 border-b">
+                <div className="px-5 py-2 border-b flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Icon />
                     <span>
@@ -43,9 +45,10 @@ export default function MarkdownPreview({
                       }
                     </span>
                   </div>
+                  <CopyButton id={id} />
                 </div>
                 <div className="overflow-x-auto w-full">
-                  <div className="p-5">{children}</div>
+                  <div className="p-5" id={id}>{children}</div>
                 </div>
               </div>
             );
