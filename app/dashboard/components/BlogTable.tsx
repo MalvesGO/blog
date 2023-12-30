@@ -2,12 +2,12 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { EyeOpenIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/components/ui/switch";
-import { readBlog } from "@/lib/actions/blog";
+import { readBlog, updateBlogById } from "@/lib/actions/blog";
 import DeleteAlert from "./DeleteAlert";
+import SwitchForm from "./SwitchForm";
+import { BlogFormSchemaType } from "../schema";
 
 export default async function BlogTable() {
-
-
   const { data: blogs } = await readBlog();
 
   return (
@@ -19,20 +19,41 @@ export default async function BlogTable() {
           <h1>Publish</h1>
         </div>
 
-        {blogs?.map((blog, index) => (
-          <div key={index} className="grid grid-cols-5 p-5 text-gray-500 border-b">
-            <h1 className="col-span-2">{blog.title}</h1>
-            <Switch checked={blog.is_premium} />
-            <Switch checked={blog.is_published} />
-            <Actions id={blog.id} />
-          </div>
-        ))}
+        {blogs?.map((blog, index) => {
+          const updatePublish = updateBlogById.bind(null, blog.id, {
+            is_published: !blog.is_published,
+          } as BlogFormSchemaType);
+
+          const updatePremium = updateBlogById.bind(null, blog.id, {
+            is_premium: !blog.is_premium,
+          } as BlogFormSchemaType);
+
+          return (
+            <div
+              key={index}
+              className="grid grid-cols-5 p-5 text-gray-500 border-b"
+            >
+              <h1 className="col-span-2">{blog.title}</h1>
+              <SwitchForm
+                checked={blog.is_premium}
+                name="premium"
+                onToggle={updatePremium}
+              />
+              <SwitchForm
+                checked={blog.is_published}
+                name="publish"
+                onToggle={updatePublish}
+              />
+              <Actions id={blog.id} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-const Actions = ({id}: {id: string}) => {
+const Actions = ({ id }: { id: string }) => {
   return (
     <div className="flex items-center gap-2 flex-wrap md:flex-row">
       <Button variant="outline" className="flex items-center gap-2">
