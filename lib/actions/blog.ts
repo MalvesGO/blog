@@ -16,6 +16,7 @@ export async function createBlog(data: BlogFormSchemaType){
         throw JSON.stringify(resultBlog);
     } else {
         const result = await supabase.from ("blog_content").insert({blog_id: resultBlog.data.id!, content: data.content});
+        revalidatePath(DASHBOARD);
         return JSON.stringify(result);
     }
 }
