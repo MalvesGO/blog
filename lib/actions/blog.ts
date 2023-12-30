@@ -23,7 +23,19 @@ export async function createBlog(data: BlogFormSchemaType){
 
 export async function readBlog(){
     const supabase = await createSupabaseServerClient();
-    return supabase.from ("blog").select("*").order("created_at", {ascending: true});
+    return supabase
+    .from ("blog")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", {ascending: true});
+}
+
+export async function readBlogAdmin(){
+    const supabase = await createSupabaseServerClient();
+    return supabase
+    .from ("blog")
+    .select("*")
+    .order("created_at", {ascending: true});
 }
 
 export async function deleteBlogById(blogId: string){
