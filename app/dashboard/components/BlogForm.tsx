@@ -18,7 +18,7 @@ import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/components/ui/switch";
 import { BsSave } from "react-icons/bs";
 import { PencilIcon, RocketIcon, StarIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +30,7 @@ export default function BlogForm({
 }: {
   onHandleSubmit: (data: BlogFormSchemaType) => void;
 }) {
+  const [isPending, startTransition] = useTransition();
   const [isPreview, setIsPreview] = useState(false);
 
   const form = useForm<z.infer<typeof BlogFormSchema>>({
@@ -45,7 +46,9 @@ export default function BlogForm({
   });
 
   function onSubmit(data: z.infer<typeof BlogFormSchema>) {
-    onHandleSubmit(data);
+    startTransition(() => {
+      onHandleSubmit(data);
+    });
   }
 
   return (
@@ -118,7 +121,7 @@ export default function BlogForm({
             />
           </div>
           <Button
-            className="flex items-center gap-2"
+            className={cn("flex items-center gap-2", {"animate-spin": isPending})}
             disabled={!form.formState.isValid}
           >
             <BsSave /> Save

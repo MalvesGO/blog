@@ -1,9 +1,15 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { EyeOpenIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
-import React from "react";
 import { Switch } from "@/components/ui/switch";
+import { readBlog } from "@/lib/actions/blog";
+import DeleteAlert from "./DeleteAlert";
 
-export default function BlogTable() {
+export default async function BlogTable() {
+
+
+  const { data: blogs } = await readBlog();
+
   return (
     <div className="overflow-x-auto">
       <div className="border bg-gradient-dark rounded-md w-[800px] md:w-full">
@@ -12,18 +18,21 @@ export default function BlogTable() {
           <h1>Premium</h1>
           <h1>Publish</h1>
         </div>
-        <div className="grid grid-cols-5 p-5">
-          <h1 className="col-span-2">Blog title</h1>
-          <Switch checked={false} />
-          <Switch checked={true} />
-          <Actions />
-        </div>
+
+        {blogs?.map((blog, index) => (
+          <div key={index} className="grid grid-cols-5 p-5 text-gray-500 border-b">
+            <h1 className="col-span-2">{blog.title}</h1>
+            <Switch checked={blog.is_premium} />
+            <Switch checked={blog.is_published} />
+            <Actions id={blog.id} />
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-const Actions = () => {
+const Actions = ({id}: {id: string}) => {
   return (
     <div className="flex items-center gap-2 flex-wrap md:flex-row">
       <Button variant="outline" className="flex items-center gap-2">
@@ -34,10 +43,7 @@ const Actions = () => {
         <Pencil1Icon />
         Edit
       </Button>
-      <Button variant="outline" className="flex items-center gap-2">
-        <TrashIcon />
-        Delete
-      </Button>
+      <DeleteAlert blogId={id} />
     </div>
   );
 };
