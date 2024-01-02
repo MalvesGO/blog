@@ -4,6 +4,7 @@ import { Database } from "@/lib/types/supabase";
 import { createBrowserClient } from "@supabase/ssr";
 import React, { useEffect, useState } from "react";
 import BlogLoading from "./BlogLoading";
+import Checkout from "@/components/stripe/Checkout";
 
 export default function BlogContent({ blogId }: { blogId: string }) {
   const [blog, setBlog] = useState<{
@@ -35,6 +36,10 @@ export default function BlogContent({ blogId }: { blogId: string }) {
 
   if (isLoading) {
     return <BlogLoading />;
+  }
+
+  if(!blog?.content){
+    return <Checkout />
   }
 
   return <MarkdownPreview content={blog?.content || ""} className="sm:px-10" />;
