@@ -34,16 +34,43 @@ export async function POST(request: any) {
           customer.email!
         );
 
-        if(error?.message){
-          return Response.json({"error": error.message});
+        if (error?.message) {
+          return Response.json({
+            error: "Unable to do subscription" + error.message,
+          });
         }
       }
+      break;
+    case "customer.subscription.deleted":
+      const deleteSub = event.data.object;
+      const { error } = await onCancelSubscription(false, deleteSub.id);
+      if (error?.message) {
+        return Response.json({
+          error: "fail to cancel subscription" + error.message,
+        });
+      }
+
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
   return Response.json({});
 }
+
+const onCancelSubscription = async (
+  subscription_status: boolean,
+  sub_id: string
+) => {
+  const supabaseAdmin = await createSupabaseAdmin();
+  return await supabaseAdmin
+    .from("users")
+    .update({
+      subscription_status,
+      stripe_subscription_id: null,
+      stripe_customer_id: null,
+    })
+    .eq("stripe_subscription_id", sub_id);
+};
 
 const onSuccessSubscription = async (
   subscription_status: boolean,
