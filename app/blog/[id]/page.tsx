@@ -3,12 +3,12 @@ import Image from "next/image";
 import React from "react";
 import BlogContent from "./components/BlogContent";
 
-// export async function generateStaticParams() {
-//   const { data: blog } = await fetch(
-//     process.env.SITE_URL + "/api/blog?id=" + "*"
-//   ).then((res) => res.json());
-//   return blog;
-// }
+export async function generateStaticParams() {
+  const { data: blog } = await fetch(
+    process.env.SITE_URL + "/api/blog?id=" + "*"
+  ).then((res) => res.json());
+  return blog;
+}
 
 // export async function generateMetadata({ params }: { params: { id: string } }) {
 //   const { data: blog } = (await fetch(
