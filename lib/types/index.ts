@@ -29,6 +29,6 @@ export type IUser = {
     image_url: string;
     role: string;
     stripe_customer_id: string | null;
-    stripe_subscription_id: string | null;
+    stripe_subscription_id: string | null; // corrected here
     subscription_status: boolean;
-} | null;
+  } | null;

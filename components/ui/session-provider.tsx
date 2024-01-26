@@ -4,31 +4,32 @@ import { Database } from "@/lib/types/supabase";
 import { createBrowserClient } from "@supabase/ssr";
 import React, { useEffect } from "react";
 
-export default function SessisonProvider() {
-	const setUser = useUser((state) => state.setUser);
+export default function Sessionprovider() {
 
-	const supabase = createBrowserClient<Database>(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-	);
+    const setUser = useUser((state) => state.setUser)
 
-	useEffect(() => {
-		readSession();
-		// eslint-disable-next-line
-	}, []);
+  const supabase = createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 
-	const readSession = async () => {
-		const { data: userSesssion } = await supabase.auth.getSession();
+  const readUserSession = async () => {
+    const { data } = await supabase.auth.getSession();
+    const { data: UserInfo } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", data?.session?.user?.id!)
+      .single();
+      
+      console.log(UserInfo)
+    
+      setUser(UserInfo);
+  };
 
-		if (userSesssion.session) {
-			const { data } = await supabase
-				.from("users")
-				.select("*")
-				.eq("id", userSesssion.session?.user.id)
-				.single();
-			setUser(data);
-		}
-	};
+  useEffect(() => {
+    readUserSession();
+    //eslint-disable-next-line
+  }, []);
 
-	return <></>;
+  return <></>;
 }
