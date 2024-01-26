@@ -10,25 +10,25 @@ export async function generateStaticParams() {
   return blog;
 }
 
-// export async function generateMetadata({ params }: { params: { id: string } }) {
-//   const { data: blog } = (await fetch(
-//     process.env.SITE_URL + "/api/blog?id=" + params.id
-//   ).then((res) => res.json())) as { data: IBlog };
-//   return {
-//     title: blog?.title,
-//     authors: {
-//       name: 'Daily Blog Coding'
-//     },
-//     openGraph: {
-//       title: blog?.title,
-//       url: process.env.SITE_ULR + "/blog/" + params.id,
-//       siteName: "Daily Blog",
-//       images: blog?.image_url,
-//       type: "website",
-//     },
-//     keywords: ["Daily Blog", "Daily Blog Coding", "Blog", "Coding", "Daily"]
-//   }
-// }
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { data: blog } = (await fetch(
+    process.env.SITE_URL + "/api/blog?id=" + params.id
+  ).then((res) => res.json())) as { data: IBlog };
+  return {
+    title: blog?.title,
+    authors: {
+      name: 'Daily Blog Coding'
+    },
+    openGraph: {
+      title: blog?.title,
+      url: process.env.SITE_ULR + "/blog/" + params.id,
+      siteName: "Daily Blog",
+      images: blog?.image_url,
+      type: "website",
+    },
+    keywords: ["Daily Blog", "Daily Blog Coding", "Blog", "Coding", "Daily"]
+  }
+}
 
 export default async function page({ params }: { params: { id: string } }) {
   const { data: blog } = (await fetch(
