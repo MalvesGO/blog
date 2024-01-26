@@ -13,11 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/components/ui/switch";
 import { BsSave } from "react-icons/bs";
-import { PencilIcon, RocketIcon, StarIcon } from "lucide-react";
+import {
+  EyeOpenIcon,
+  Pencil1Icon,
+  RocketIcon,
+  StarIcon,
+} from "@radix-ui/react-icons";
 import { useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -31,7 +34,7 @@ export default function BlogForm({
   blog,
 }: {
   onHandleSubmit: (data: BlogFormSchemaType) => void;
-  blog?: IBlogDetail
+  blog?: IBlogDetail;
 }) {
   const [isPending, startTransition] = useTransition();
   const [isPreview, setIsPreview] = useState(false);
@@ -74,7 +77,7 @@ export default function BlogForm({
             >
               {isPreview ? (
                 <>
-                  <PencilIcon />
+                  <Pencil1Icon />
                   Edit
                 </>
               ) : (
@@ -124,7 +127,9 @@ export default function BlogForm({
             />
           </div>
           <Button
-            className={cn("flex items-center gap-2", {"animate-spin": isPending})}
+            className={cn("flex items-center gap-2", {
+              "animate-spin": isPending,
+            })}
             disabled={!form.formState.isValid}
           >
             <BsSave /> Save

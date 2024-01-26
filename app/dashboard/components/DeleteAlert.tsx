@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { TrashIcon } from "lucide-react";
+import { TrashIcon } from "@radix-ui/react-icons";
 import React, { useTransition } from "react";
 import {
   AlertDialog,

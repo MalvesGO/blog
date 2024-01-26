@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PlusIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import React from "react";
 import BlogTable from "./components/BlogTable";
@@ -12,7 +12,7 @@ export default function Dashboard() {
         <Link href="/dashboard/blog/create">
           <Button variant="outline">
             Create
-            <Plus size={16} className="ml-2" />
+            <PlusIcon className="ml-2" />
           </Button>
         </Link>
       </div>
