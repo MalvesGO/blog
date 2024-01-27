@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import Navbar from "@/components/nav/Navbar";
 import Sessionprovider from "@/components/ui/session-provider";
 import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           <main className="max-w-7xl mx-auto p-10 space-y-10">
             <Navbar />
             {children}
+            <Footer />
           </main>
           <Toaster />
         </ThemeProvider>
