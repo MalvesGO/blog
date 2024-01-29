@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
-import React, { useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 
 export default function DeleteAlert({ blogId }: { blogId: string }) {
   const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false);
 
   const onSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +45,7 @@ export default function DeleteAlert({ blogId }: { blogId: string }) {
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <TrashIcon />
