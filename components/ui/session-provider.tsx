@@ -5,8 +5,7 @@ import { createBrowserClient } from "@supabase/ssr";
 import React, { useEffect } from "react";
 
 export default function Sessionprovider() {
-
-    const setUser = useUser((state) => state.setUser)
+  const setUser = useUser((state) => state.setUser);
 
   const supabase = createBrowserClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,10 +19,8 @@ export default function Sessionprovider() {
       .select("*")
       .eq("id", data?.session?.user?.id!)
       .single();
-      
-      console.log(UserInfo)
-    
-      setUser(UserInfo);
+
+    setUser(UserInfo);
   };
 
   useEffect(() => {
